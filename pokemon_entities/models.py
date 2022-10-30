@@ -14,6 +14,7 @@ class PokemonEntity(models.Model):
 
     lat = models.FloatField(null=True, blank=True)
     lon = models.FloatField(null=True, blank=True)
-
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, default='', blank=True)
+    
     def __str__(self):
         return f'{self.lat}; {self.lon}'

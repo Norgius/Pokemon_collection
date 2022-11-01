@@ -2,13 +2,25 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
-    
-    title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
-    description = models.TextField(blank=True)
-    title_en = models.CharField(max_length=50, blank=True)
-    title_jp = models.CharField(max_length=50, blank=True)
-    previous_evolution = models.ForeignKey("self", on_delete=models.CASCADE, related_name='next_evolution', null=True, blank=True)
+
+    title = models.CharField('Имя покемона', max_length=200)
+    image = models.ImageField(
+        'Изображение покемона',
+        upload_to='images/',
+        null=True,
+        blank=True
+    )
+    description = models.TextField('Описание', blank=True)
+    title_en = models.CharField('Имя на англ', max_length=50, blank=True)
+    title_jp = models.CharField('Имя на японском', max_length=50, blank=True)
+    previous_evolution = models.ForeignKey(
+        'self',
+        verbose_name='Из кого эволюционировал',
+        on_delete=models.CASCADE,
+        related_name='next_evolution',
+        null=True,
+        blank=True
+    )
 
     def __str__(self) -> str:
         return self.title
@@ -16,16 +28,22 @@ class Pokemon(models.Model):
 
 class PokemonEntity(models.Model):
 
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, default='', blank=True)
-    lat = models.FloatField(null=True, blank=True)
-    lon = models.FloatField(null=True, blank=True)
-    appeared_at = models.DateTimeField(null=True, blank=True)
-    disappeared_at = models.DateTimeField(null=True, blank=True)
-    level = models.IntegerField(null=True, blank=True)
-    health = models.IntegerField(null=True, blank=True)
-    strenght = models.IntegerField(null=True, blank=True)
-    defence = models.IntegerField(null=True, blank=True)
-    stamina = models.IntegerField(null=True, blank=True)
+    pokemon = models.ForeignKey(
+        Pokemon,
+        verbose_name='Покемон',
+        on_delete=models.CASCADE,
+        default='',
+        blank=True
+    )
+    lat = models.FloatField('Широта', null=True, blank=True)
+    lon = models.FloatField('Долгота', null=True, blank=True)
+    appeared_at = models.DateTimeField('Появился', null=True, blank=True)
+    disappeared_at = models.DateTimeField('Исчез', null=True, blank=True)
+    level = models.IntegerField('Уровень', null=True, blank=True)
+    health = models.IntegerField('Здоровье', null=True, blank=True)
+    strenght = models.IntegerField('Сила', null=True, blank=True)
+    defence = models.IntegerField('Защита', null=True, blank=True)
+    stamina = models.IntegerField('Выносливость', null=True, blank=True)
 
     def __str__(self):
         return f'{self.pokemon.title}. Координаты: {self.lat}; {self.lon}'

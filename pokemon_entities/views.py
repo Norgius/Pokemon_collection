@@ -54,7 +54,13 @@ def show_all_pokemons(request):
 def show_pokemon(request, pokemon_id):
     try:
         pokemon = Pokemon.objects.get(id=pokemon_id)
-        requested_pokemon = {'title_ru': pokemon.title, 'img_url': pokemon.image.url, 'description': pokemon.description}
+        requested_pokemon = {
+            'title_ru': pokemon.title,
+            'img_url': pokemon.image.url,
+            'description': pokemon.description,
+            'title_en': pokemon.title_en,
+            'title_jp': pokemon.title_jp,
+        }
     except ObjectDoesNotExist:
         return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
     pokemon_entity = PokemonEntity.objects.filter(

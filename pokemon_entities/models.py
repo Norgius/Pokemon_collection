@@ -1,4 +1,4 @@
-from django.db import models  # noqa F401
+from django.db import models
 
 
 class Pokemon(models.Model):
@@ -8,7 +8,6 @@ class Pokemon(models.Model):
         'Изображение покемона',
         upload_to='images/',
         null=True,
-        blank=True
     )
     description = models.TextField('Описание', blank=True)
     title_en = models.CharField('Имя на англ', max_length=50, blank=True)
@@ -33,12 +32,11 @@ class PokemonEntity(models.Model):
         verbose_name='Покемон',
         on_delete=models.CASCADE,
         default='',
-        blank=True
     )
-    lat = models.FloatField('Широта', null=True, blank=True)
-    lon = models.FloatField('Долгота', null=True, blank=True)
-    appeared_at = models.DateTimeField('Появился', null=True, blank=True)
-    disappeared_at = models.DateTimeField('Исчез', null=True, blank=True)
+    lat = models.FloatField('Широта', null=True)
+    lon = models.FloatField('Долгота', null=True)
+    appeared_at = models.DateTimeField('Появился', null=True)
+    disappeared_at = models.DateTimeField('Исчез', null=True)
     level = models.IntegerField('Уровень', null=True, blank=True)
     health = models.IntegerField('Здоровье', null=True, blank=True)
     strenght = models.IntegerField('Сила', null=True, blank=True)

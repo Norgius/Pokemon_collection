@@ -1,9 +1,8 @@
 import folium
 
 from django.utils import timezone
-from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
 from .models import Pokemon, PokemonEntity
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -49,21 +48,18 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    try:
-        pokemon = Pokemon.objects.get(id=pokemon_id)
-        next_evolutions = pokemon.next_evolutions.all()
-        next_evolution = next_evolutions[0] if next_evolutions else None
-        requested_pokemon = {
-            'title_ru': pokemon.title,
-            'img_url': pokemon.image.url,
-            'description': pokemon.description,
-            'title_en': pokemon.title_en,
-            'title_jp': pokemon.title_jp,
-            'previous_evolution': pokemon.previous_evolution,
-            'next_evolution': next_evolution
-        }
-    except ObjectDoesNotExist:
-        return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
+    pokemon = get_object_or_404(Pokemon, id=pokemon_id)
+    next_evolutions = pokemon.next_evolutions.all()
+    next_evolution = next_evolutions.first()
+    requested_pokemon = {
+        'title_ru': pokemon.title,
+        'img_url': pokemon.image.url,
+        'description': pokemon.description,
+        'title_en': pokemon.title_en,
+        'title_jp': pokemon.title_jp,
+        'previous_evolution': pokemon.previous_evolution,
+        'next_evolution': next_evolution
+    }
 
     current_time = timezone.localtime()
     pokemon_essences = pokemon.pokemon_essences.filter(

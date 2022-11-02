@@ -31,7 +31,7 @@ class PokemonEntity(models.Model):
         Pokemon,
         verbose_name='Покемон',
         on_delete=models.CASCADE,
-        default='',
+        default='Покемон не указан',
     )
     lat = models.FloatField('Широта', null=True)
     lon = models.FloatField('Долгота', null=True)

@@ -62,13 +62,13 @@ def show_pokemon(request, pokemon_id):
     }
 
     current_time = timezone.localtime()
-    pokemon_essences = pokemon.pokemon_essences.filter(
+    pokemon_entities = pokemon.pokemon_entities.filter(
         appeared_at__lte=current_time,
         disappeared_at__gte=current_time,
     )
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    for pokemon in pokemon_essences:
+    for pokemon in pokemon_entities:
         add_pokemon(
             request,
             folium_map,

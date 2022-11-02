@@ -51,7 +51,7 @@ def show_all_pokemons(request):
 def show_pokemon(request, pokemon_id):
     try:
         pokemon = Pokemon.objects.get(id=pokemon_id)
-        next_evolutions = pokemon.next_evolution.all()
+        next_evolutions = pokemon.next_evolutions.all()
         next_evolution = next_evolutions[0] if next_evolutions else None
         requested_pokemon = {
             'title_ru': pokemon.title,
